@@ -4,5 +4,5 @@
     <string name="txt_default_msg">Default Message</string>
     <string name="txt_counter_msg">Text Counter %d</string>
 
-    <string name="txt_count_btn_caption">Count</string>
+    <string name="txt_count_btn_caption">Load Counter</string>
 </resources>

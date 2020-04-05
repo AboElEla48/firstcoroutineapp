@@ -30,13 +30,18 @@ class MainFragment : Fragment() {
 
         viewModel.txtMsg.observe(viewLifecycleOwner, Observer {text ->
             message_text_view.text = text
+        })
 
-            msng_progress_bar.visibility = View.GONE
+        viewModel.progressVisibility.observe(viewLifecycleOwner, Observer { isVisible ->
+            msg_loading_progress_bar.visibility = isVisible
+        })
+
+        viewModel.counterBtnEnabled.observe(viewLifecycleOwner, Observer { isEnabled ->
+            counter_btn.isEnabled = isEnabled
         })
 
 
         counter_btn.setOnClickListener{
-            msng_progress_bar.visibility = View.VISIBLE
             viewModel.changeText()
         }
 

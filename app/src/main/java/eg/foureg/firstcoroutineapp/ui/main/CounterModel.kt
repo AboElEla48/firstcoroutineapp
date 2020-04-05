@@ -5,8 +5,11 @@ import kotlinx.coroutines.delay
 
 class CounterModel {
 
+    /**
+     * Load data from backend simulator
+     */
      suspend fun loadCounter() : Int{
-         delay(3 * 1000)
+         delay(2 * 1000)
          return ++counter
     }
 
