@@ -6,4 +6,6 @@
 
     <string name="txt_count_btn_caption">Load Counter</string>
     <string name="txt_cancel_btn_caption">Cancel</string>
+
+    <string name="txt_timeout_btn_caption">Load with Timeout</string>
 </resources>

@@ -30,6 +30,7 @@ class MainViewModel : ViewModel() {
             progressVisibility.value = View.VISIBLE
             counterBtnEnabled.value = false
             cancelBtnEnabled.value = true
+            timeoutBtnEnabled.value = false
 
             // Load Counter from async data provider (Backend simulation)
             txtMsg.value = String.format(context.getString(R.string.txt_counter_msg), counterModel.loadCounter())
@@ -48,6 +49,7 @@ class MainViewModel : ViewModel() {
             progressVisibility.value = View.GONE
             counterBtnEnabled.value = true
             cancelBtnEnabled.value = false
+            timeoutBtnEnabled.value = true
         }
 
     }
@@ -77,6 +79,7 @@ class MainViewModel : ViewModel() {
 
     val counterBtnEnabled : MutableLiveData<Boolean> = MutableLiveData()
     val cancelBtnEnabled : MutableLiveData<Boolean> = MutableLiveData()
+    val timeoutBtnEnabled : MutableLiveData<Boolean> = MutableLiveData()
     val progressVisibility : MutableLiveData<Int> = MutableLiveData()
 
 
