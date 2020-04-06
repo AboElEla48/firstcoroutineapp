@@ -27,6 +27,7 @@ class MainViewModel : ViewModel() {
             // Prepare UI for loading
             progressVisibility.value = View.VISIBLE
             counterBtnEnabled.value = false
+            cancelBtnEnabled.value = true
 
             // Load Counter from async data provider (Backend simulation)
             txtMsg.value = String.format(context.getString(R.string.txt_counter_msg), counterModel.loadCounter())
@@ -43,7 +44,15 @@ class MainViewModel : ViewModel() {
             // Hide progresss bar when finishes loading
             progressVisibility.value = View.GONE
             counterBtnEnabled.value = true
+            cancelBtnEnabled.value = false
         }
+
+    }
+
+    /**
+     * Cancel loading coroutine
+     */
+    fun cancelLoading() {
 
     }
 
@@ -51,8 +60,11 @@ class MainViewModel : ViewModel() {
     val counterModel : CounterModel = CounterModel()
 
     val txtMsg : MutableLiveData<String> = MutableLiveData()
-    val progressVisibility : MutableLiveData<Int> = MutableLiveData()
+
     val counterBtnEnabled : MutableLiveData<Boolean> = MutableLiveData()
+    val cancelBtnEnabled : MutableLiveData<Boolean> = MutableLiveData()
+    val progressVisibility : MutableLiveData<Int> = MutableLiveData()
+
 
     companion object {
         const val TAG : String = "MainViewModel"

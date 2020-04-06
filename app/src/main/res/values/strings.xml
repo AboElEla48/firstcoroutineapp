@@ -5,4 +5,5 @@
     <string name="txt_counter_msg">Text Counter %d</string>
 
     <string name="txt_count_btn_caption">Load Counter</string>
+    <string name="txt_cancel_btn_caption">Cancel</string>
 </resources>
