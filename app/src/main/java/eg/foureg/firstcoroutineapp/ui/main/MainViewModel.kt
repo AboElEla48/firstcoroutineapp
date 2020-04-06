@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import eg.foureg.firstcoroutineapp.R
+import eg.foureg.firstcoroutineapp.common.Logger
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
@@ -18,7 +19,11 @@ class MainViewModel : ViewModel() {
      * Load value counter from backend and change text in UI according to result value
      */
     fun changeText() {
+        Logger.debug(TAG, "changeText() | started ")
+
         val counterLoaderJob = viewModelScope.launch {
+            Logger.debug(TAG, "CounterModel counterLoaderJob started ")
+
             // Prepare UI for loading
             progressVisibility.value = View.VISIBLE
             counterBtnEnabled.value = false
@@ -28,8 +33,12 @@ class MainViewModel : ViewModel() {
         }
 
         viewModelScope.launch {
+            Logger.debug(TAG, "CounterModel Receiver coroutine stared")
+
             // Wait till loading is finished from backend
             counterLoaderJob.join()
+
+            Logger.debug(TAG, "CounterModel Loader coroutine result received")
 
             // Hide progresss bar when finishes loading
             progressVisibility.value = View.GONE
@@ -44,5 +53,9 @@ class MainViewModel : ViewModel() {
     val txtMsg : MutableLiveData<String> = MutableLiveData()
     val progressVisibility : MutableLiveData<Int> = MutableLiveData()
     val counterBtnEnabled : MutableLiveData<Boolean> = MutableLiveData()
+
+    companion object {
+        const val TAG : String = "MainViewModel"
+    }
 
 }
