@@ -57,6 +57,10 @@ class MainFragment : Fragment() {
             viewModel.cancelLoading()
         }
 
+        timeout_btn.setOnClickListener{
+            viewModel.startTimeOutRequest()
+        }
+
 
     }
 
