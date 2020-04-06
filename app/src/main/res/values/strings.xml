@@ -4,6 +4,10 @@
     <string name="txt_default_msg">Default Message</string>
     <string name="txt_counter_msg">Text Counter %d</string>
 
+    <string name="txt_timeout_msg">Process Timeout</string>
+
     <string name="txt_count_btn_caption">Load Counter</string>
     <string name="txt_cancel_btn_caption">Cancel</string>
+
+    <string name="txt_timeout_btn_caption">Load with Timeout</string>
 </resources>

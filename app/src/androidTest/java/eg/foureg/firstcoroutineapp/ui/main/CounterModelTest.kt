@@ -11,12 +11,12 @@ class CounterModelTest {
         val counterModel = CounterModel()
 
         var counter = counterModel.loadCounter()
-        Assert.assertEquals(counter, 1)
+        Assert.assertEquals(counter, 5)
 
         counter = counterModel.loadCounter()
-        Assert.assertEquals(counter, 2)
+        Assert.assertEquals(counter, 10)
 
         counter = counterModel.loadCounter()
-        Assert.assertEquals(counter, 3)
+        Assert.assertEquals(counter, 15)
     }
 }

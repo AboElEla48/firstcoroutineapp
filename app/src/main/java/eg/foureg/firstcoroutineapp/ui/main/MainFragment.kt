@@ -44,6 +44,10 @@ class MainFragment : Fragment() {
             cancel_btn.isEnabled = isEnabled
         })
 
+        viewModel.timeoutBtnEnabled.observe(viewLifecycleOwner, Observer { isEnabled ->
+            timeout_btn.isEnabled = isEnabled
+        })
+
 
         counter_btn.setOnClickListener{
             viewModel.changeText()
@@ -51,6 +55,10 @@ class MainFragment : Fragment() {
 
         cancel_btn.setOnClickListener{
             viewModel.cancelLoading()
+        }
+
+        timeout_btn.setOnClickListener{
+            viewModel.startTimeOutRequest()
         }
 
 

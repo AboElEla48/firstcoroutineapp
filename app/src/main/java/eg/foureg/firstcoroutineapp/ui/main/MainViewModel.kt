@@ -10,11 +10,26 @@ import eg.foureg.firstcoroutineapp.common.Logger
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeoutOrNull
 
 class MainViewModel : ViewModel() {
 
     fun initModel(c: Context) {
         context = c
+    }
+
+    private fun processStarted() {
+        progressVisibility.value = View.VISIBLE
+        counterBtnEnabled.value = false
+        cancelBtnEnabled.value = true
+        timeoutBtnEnabled.value = false
+    }
+
+    private fun processFinished() {
+        progressVisibility.value = View.GONE
+        counterBtnEnabled.value = true
+        cancelBtnEnabled.value = false
+        timeoutBtnEnabled.value = true
     }
 
     /**
@@ -27,9 +42,7 @@ class MainViewModel : ViewModel() {
             Logger.debug(TAG, "changeText() | CounterModel counterLoaderJob started ")
 
             // Prepare UI for loading
-            progressVisibility.value = View.VISIBLE
-            counterBtnEnabled.value = false
-            cancelBtnEnabled.value = true
+            processStarted()
 
             // Load Counter from async data provider (Backend simulation)
             txtMsg.value = String.format(context.getString(R.string.txt_counter_msg), counterModel.loadCounter())
@@ -45,11 +58,32 @@ class MainViewModel : ViewModel() {
             Logger.debug(TAG, "changeText() | Message is: ${txtMsg.value}")
 
             // Hide progresss bar when finishes loading
-            progressVisibility.value = View.GONE
-            counterBtnEnabled.value = true
-            cancelBtnEnabled.value = false
+            processFinished()
         }
 
+    }
+
+    fun startTimeOutRequest() {
+        Logger.debug(TAG, "startTimeOutRequest() | started")
+
+        viewModelScope.launch {
+            Logger.debug(TAG, "changeText() | CounterModel counterLoaderJob started ")
+
+            // Prepare UI for loading
+            processStarted()
+
+            // Load Counter from async data provider (Backend simulation)
+            val timeoutJob = withTimeoutOrNull(2000) {
+                txtMsg.value = String.format(context.getString(R.string.txt_counter_msg), counterModel.loadCounter())
+            }
+
+            if(timeoutJob == null) {
+                txtMsg.value = context.getString(R.string.txt_timeout_msg)
+            }
+
+            processFinished()
+
+        }
     }
 
     /**
@@ -77,6 +111,7 @@ class MainViewModel : ViewModel() {
 
     val counterBtnEnabled : MutableLiveData<Boolean> = MutableLiveData()
     val cancelBtnEnabled : MutableLiveData<Boolean> = MutableLiveData()
+    val timeoutBtnEnabled : MutableLiveData<Boolean> = MutableLiveData()
     val progressVisibility : MutableLiveData<Int> = MutableLiveData()
 
 
