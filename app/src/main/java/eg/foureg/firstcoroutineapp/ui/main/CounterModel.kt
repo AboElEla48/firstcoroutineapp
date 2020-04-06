@@ -9,13 +9,20 @@ class CounterModel {
     /**
      * Load data from backend simulator
      */
-     suspend fun loadCounter() : Int{
+    suspend fun loadCounter() : Int{
         Logger.debug(TAG, "loadCounter() | started ")
 
-         delay(2 * 1000)
+        repeat(4){i ->
+            Logger.debug(TAG, "loadCounter() | Repeat index: $i ")
+            delay(2 * 1000)
+
+            // Increment counter with each cycle
+            Logger.debug(TAG, "loadCounter() | Counter cycle: ${++counter} ")
+        }
+
         Logger.debug(TAG, "loadCounter() | delay finished, return result loaded ")
 
-         return ++counter
+        return ++counter
     }
 
     var counter : Int = 0

@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import eg.foureg.firstcoroutineapp.R
 import eg.foureg.firstcoroutineapp.common.Logger
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
@@ -21,8 +23,8 @@ class MainViewModel : ViewModel() {
     fun changeText() {
         Logger.debug(TAG, "changeText() | started ")
 
-        val counterLoaderJob = viewModelScope.launch {
-            Logger.debug(TAG, "CounterModel counterLoaderJob started ")
+        counterLoaderJob = viewModelScope.launch {
+            Logger.debug(TAG, "changeText() | CounterModel counterLoaderJob started ")
 
             // Prepare UI for loading
             progressVisibility.value = View.VISIBLE
@@ -34,12 +36,13 @@ class MainViewModel : ViewModel() {
         }
 
         viewModelScope.launch {
-            Logger.debug(TAG, "CounterModel Receiver coroutine stared")
+            Logger.debug(TAG, "changeText() | CounterModel Receiver coroutine stared")
 
             // Wait till loading is finished from backend
             counterLoaderJob.join()
 
-            Logger.debug(TAG, "CounterModel Loader coroutine result received")
+            Logger.debug(TAG, "changeText() | CounterModel Loader coroutine result received")
+            Logger.debug(TAG, "changeText() | Message is: ${txtMsg.value}")
 
             // Hide progresss bar when finishes loading
             progressVisibility.value = View.GONE
@@ -53,11 +56,22 @@ class MainViewModel : ViewModel() {
      * Cancel loading coroutine
      */
     fun cancelLoading() {
+        Logger.debug(TAG, "cancelLoading() | started")
 
+        viewModelScope.launch {
+            if(counterLoaderJob.isActive) {
+                Logger.debug(TAG, "cancelLoading() | send cancel message")
+                counterLoaderJob.cancelAndJoin()
+
+                Logger.debug(TAG, "cancelLoading() | CounterModel Loader coroutine canceled")
+            }
+        }
     }
 
     lateinit var context : Context
-    val counterModel : CounterModel = CounterModel()
+    private val counterModel : CounterModel = CounterModel()
+
+    private lateinit var counterLoaderJob : Job
 
     val txtMsg : MutableLiveData<String> = MutableLiveData()
 
