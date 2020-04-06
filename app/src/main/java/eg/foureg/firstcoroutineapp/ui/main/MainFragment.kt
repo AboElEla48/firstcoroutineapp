@@ -40,9 +40,17 @@ class MainFragment : Fragment() {
             counter_btn.isEnabled = isEnabled
         })
 
+        viewModel.cancelBtnEnabled.observe(viewLifecycleOwner, Observer { isEnabled ->
+            cancel_btn.isEnabled = isEnabled
+        })
+
 
         counter_btn.setOnClickListener{
             viewModel.changeText()
+        }
+
+        cancel_btn.setOnClickListener{
+            viewModel.cancelLoading()
         }
 
 
