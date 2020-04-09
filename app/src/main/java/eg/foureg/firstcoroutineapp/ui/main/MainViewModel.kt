@@ -9,6 +9,7 @@ import eg.foureg.firstcoroutineapp.R
 import eg.foureg.firstcoroutineapp.common.Logger
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
 
@@ -40,6 +41,8 @@ class MainViewModel : ViewModel() {
 
         counterLoaderJob = viewModelScope.launch {
             Logger.debug(TAG, "changeText() | CounterModel counterLoaderJob started ")
+
+            Logger.debug(TAG, "changeText() | Access isActive from inside coroutine ? ${coroutineContext[Job]!!.isActive}")
 
             // Prepare UI for loading
             processStarted()
